@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>З Новим роком 2026</title>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        background: linear-gradient(#0a0a2a, #000);
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        text-align: center;
+    }
+
+    .start {
+        position: fixed;
+        inset: 0;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+    }
+
+    .start button {
+        font-size: 26px;
+        padding: 18px 36px;
+        border-radius: 40px;
+        border: none;
+        background: pink;
+        cursor: pointer;
+        box-shadow: 0 0 20px hotpink;
+    }
+
+    .card {
+        max-width: 600px;
+        margin: 80px auto;
+        padding: 30px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 25px;
+        box-shadow: 0 0 30px rgba(255,105,180,0.4);
+        animation: fadeIn 2s ease;
+    }
+
+    h1 {
+        font-size: 40px;
+        color: pink;
+        text-shadow: 0 0 20px hotpink;
+    }
+
+    p {
+        font-size: 20px;
+        line-height: 1.6;
+    }
+
+    .love {
+        margin-top: 25px;
+        font-size: 30px;
+        color: pink;
+        text-shadow: 0 0 15px hotpink;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+    }
+</style>
+</head>
+<body>
+
+<div class="start" id="start">
+    <button onclick="start()">❄️ Відкрити ❄️</button>
+</div>
+
+<div class="card" id="card" style="display:none;">
+    <h1>Вітаю тебе з Новим роком 2026 🎄</h1>
+    <p>
+        Бажаю тобі щастя, тепла та спокою в серці.<br>
+        Нехай цей рік подарує багато усмішок,<br>
+        здійснить мрії та принесе лише хороші моменти ✨
+    </p>
+    <div class="love">Люблю тебе 💗</div>
+</div>
+
+<audio id="music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
+</audio>
+
+<canvas id="snow"></canvas>
+
+<script>
+function start() {
+    document.getElementById("start").style.display = "none";
+    document.getElementById("card").style.display = "block";
+    document.getElementById("music").play();
+}
+
+/* ❄️ SNOW */
+const snow = document.getElementById("snow");
+const s = snow.getContext("2d");
+snow.width = innerWidth;
+snow.height = innerHeight;
+
+let flakes = Array.from({length: 200}, () => ({
+    x: Math.random()*innerWidth,
+    y: Math.random()*innerHeight,
+    r: Math.random()*3+1,
+    v: Math.random()+0.5
+}));
+
+function drawSnow() {
+    s.clearRect(0,0,snow.width,snow.height);
+    s.fillStyle="white";
+    flakes.forEach(f=>{
+        s.beginPath();
+        s.arc(f.x,f.y,f.r,0,Math.PI*2);
+        s.fill();
+        f.y+=f.v;
+        if(f.y>innerHeight){f.y=0;f.x=Math.random()*innerWidth;}
+    });
+    requestAnimationFrame(drawSnow);
+}
+drawSnow();
+</script>
+
+</body>
+</html>
